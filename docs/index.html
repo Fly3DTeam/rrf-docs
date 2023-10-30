@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fly RRF Docs</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="css/theme-simple-dark.css">
+    <link rel="stylesheet" media="(prefers-color-scheme: light)" href="css/theme-simple.css">
+
+    <link href="css/Source-Code-Pro.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/translate-google.css">
+    <link rel="stylesheet" href="css/sidebar.min.css" />
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar-folder.min.css" /> -->
+</head>
+
+<script type="text/javascript">
+    function loadScript(url, callback) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+
+        if (script.readyState) {  // IE
+            script.onreadystatechange = function () {
+                if (script.readyState == "loaded" || script.readyState == "complete") {
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else {  // Other
+            script.onload = function () {
+                callback();
+            };
+        }
+
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+    function ping(url, callback) {
+        var start = new Date().getTime();
+        var xhr = new XMLHttpRequest();
+        xhr.timeout = 2000;
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                var end = new Date().getTime();
+                var time = end - start;
+
+                if (callback && typeof callback === 'function') {
+                    callback(time);
+                }
+            }
+        };
+
+        xhr.open('GET', url, true);
+        xhr.send();
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+        var tr = document.getElementById("google_translate_element");
+
+        ping("https://translate.google.com/translate_a/element.js", function (t) {
+            if (t >= 2000) {
+                tr.innerHTML = '<div style="background-color: rgba(255, 255, 255, 0.5);width: auto;text-align: center;position: fixed;display: flex;top: 0;padding: 10px 0;right:65px;line-height: 0.8;border-radius: 10px;"><font style="font-size: 12px;color: blue;">无法加载翻译插件<br/>&nbsp;&nbsp;Unable to load translation plugin&nbsp;&nbsp;</font><div>';
+                console.log("无法加载谷歌翻译插件");
+            } else {
+                loadScript("https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit", function () {
+                    console.log("谷歌翻译插件加载完成");
+                });
+            }
+        });
+    });
+</script>
+
+<body style="position: relative !important; min-height: 100% !important; top: 0px !important;">
+
+    <div class="app-nav select" id="google_translate_element"></div>
+
+    <div id="app"></div>
+
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'zh-CN',
+                includedLanguages: 'zh-CN,ru,zh-TW,en,ja,de,ko',
+                autoDisplay: false,
+                disableAutoTranslation: false,
+            }, 'google_translate_element');
+        }
+        function translateLanguage(lang) {
+            setCookie("googtrans", "/zh-CN/" + lang);
+            //googleTranslateElementInit();
+            window.location.reload(false);
+        }
+
+        function setCookie(name, value) {
+            var Days = 1;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + "=" + escape(value) + ";";
+            document.cookie = name + "=" + escape(value) + ";domain=.fly3d.xyz;";
+            document.cookie = name + "=" + escape(value) + ";domain=fly3d.xyz;";
+        }
+        function getCookie(name) {
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+            if (arr = document.cookie.match(reg)) return unescape(arr[2]);
+            else return null;
+        }
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) { return pair[1]; }
+            }
+            return null;
+        }
+        function getFilenameFromUrl(url) {
+            const pathname = new URL(url).pathname;
+            const index = pathname.lastIndexOf('/');
+            return (-1 !== index) ? pathname.substring(index + 1) : pathname;
+        }
+    </script>
+
+    <script>
+        window.$docsify = {
+            name: '<img src="logo.png" data-origin="logo.png" alt="Style Dictionary logo" class="sidebar-logo">Fly RRF Docs',
+            repo: 'FLYmaker/rrf-docs',
+            el: '#app',
+            loadSidebar: true,
+            subMaxLevel: 6,
+            sidebarDisplayLevel: 1,
+            notFoundPage: true,
+            coverpage: true,
+            auto2top: true,
+            executeScript: true,
+            loadNavbar: false,
+            autoHeader: true,
+            mergeNavbar: true,
+            nameLink: {
+                '/': '#/',
+            },
+            search: {
+                noData: {
+                    '/': '没有结果!',
+                },
+                paths: 'auto',
+                placeholder: {
+                    '/': '搜索',
+                },
+                pathNamespaces: ['/']
+            },
+            plugins: [
+
+            ],
+            onlyCover: false,
+            pagination: {
+                previousText: '上一章节',
+                nextText: '下一章节',
+                crossChapter: true,
+                crossChapterText: true,
+            },
+            beian: {
+                ICP: "",
+                NISMSP: {
+                    number: "",
+                    url: "",
+                    id: ""
+                },
+            },
+            'flexible-alerts': {
+                style: 'flat'
+            },
+            // 在每个页面加载完成后执行的回调函数
+            doneEach: function () {
+                // 创建一个谷歌翻译的脚本标签
+                var script = document.createElement('script');
+                script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                script.async = true;
+                document.body.appendChild(script);
+
+                document.body.style.top = "0px";
+            }
+        }
+    </script>
+
+    <script src="js/docsify.min.js"></script>
+    <script src="js/docsify-themeable.min.js"></script>
+    <script src="js/index.min.js"></script>
+    <script src="js/flexible-alerts.js"></script>
+
+    <script src="js/emoji.min.js"></script>
+    <script src="js/zoom-image.min.js"></script>
+    <script src="js/search.min.js"></script>
+    <script src="js/docsify-copy-code.min.js"></script>
+    <script src="js/external-script.min.js"></script>
+    <script src="js/prism-bash.min.js"></script>
+    <script src="js/prism-markdown.min.js"></script>
+    <script src="js/prism-python.min.js"></script>
+    <script src="js/prism-cfg.min.js"></script>
+    <script src="js/docsify-tabs.js"></script>
+    <script src="js/docsify-pagination.min.js"></script>
+    <script src="js/docsify-select.js"></script>
+    <script src="js/beian.min.js"></script>
+    <script src="js/docsify-sidebar-collapse.min.js"></script>
+    <script src="js/pdfobject.min.js"></script>
+    <script src="/tools/o3dv/o3dv.min.js"></script>
+    <script src="js/docsify-pdf-embed.js"></script>
+
+    <script>
+        function init() {
+            lang = getQueryVariable("lang");
+            if (lang != undefined && lang != null && lang != "") {
+                if (getCookie("lang") != lang) {
+                    setCookie("lang", lang);
+                    translateLanguage(lang);
+                    return;
+                }
+            }
+            language = navigator.language || navigator.userLanguage;
+            googtrans = getCookie("googtrans");
+            if (language == undefined || language == null || language == "") {
+                if (language != 'en-GB' && language != 'zh-CN' && language != 'zh-TW' && language != 'ja' && language != 'de' && language != 'ko') {
+                    language = "en-GB";
+                }
+            }
+            if (googtrans == undefined || googtrans == null || googtrans == "" || googtrans.split("/").length < 3) {
+                translateLanguage(language);
+                return;
+            }
+            googtrans = googtrans.split("/")[2];
+
+            if (googtrans == "zh-CN" && language != "zh-CN") {
+                console.log(googtrans);
+                translateLanguage(language);
+                return;
+            }
+
+        }
+        setTimeout("init()", 500);
+
+    </script>
+</body>
+
+</html>
